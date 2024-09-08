@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love App</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        /* Surat & Tombol Awal */
+        #intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #intro.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+        #letter {
+            font-size: 20px;
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #love-btn {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #ff66b3;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #love-btn:hover {
+            background-color: #ff3385;
+        }
+
+        /* Gaya untuk bagian utama aplikasi */
+        .container {
+            position: relative;
+            text-align: center;
+            display: none;
+        }
+        .container.active {
+            display: block;
+        }
+        #image {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+        }
+        #caption {
+            font-size: 18px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        #message {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            font-family: 'Verdana', sans-serif;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .slide-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .arrow {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px;
+            user-select: none;
+        }
+        .arrow:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bagian Surat & Tombol Love -->
+    <div id="intro">
+        <div id="letter">
+            <p>Hai Bubub, ada sesuatu yang spesial untukmu nih! 😘</p>
+        </div>
+        <button id="love-btn" onclick="startApp()">Pencet dong 💖</button>
+    </div>
+
+    <!-- Bagian Utama Aplikasi -->
+    <div class="container" id="app">
+        <div id="message">Untuk Bubub yang spesial, Aku ingin kamu baca ceritaku🌟</div>
+        <div class="slide-container">
+            <span class="arrow" onclick="prevImage()">&#9664;</span>
+            <img id="image" src="stiker 1.gif" alt="GIF">
+            <span class="arrow" onclick="nextImage()">&#9654;</span>
+        </div>
+        <div id="caption">Pesan untuk kamu: Alo,aku mau ngomong sama kamu pencet selanjutnya dong😚!</div>
+        <div class="buttons">
+            <button onclick="prevImage()">kembali😚</button>
+            <button onclick="nextImage()">berikutnya😋</button>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { src: 'stiker 1.gif', caption: 'Makasih bub udah ngedengerin cerita dariku,maaf juga aku lama kirimnya soalnya tdi aku kepikiran pengen buat ini,maaf juga kalau hadiah yang kubuat masih belum bagus.tpi aku janji ntar aku mau bikin hadiah kejutan yang lebih bagus daripada ini.jika kamu udh baca ini kamu bisa kirim balasan ke wa ku ya bub ntah kamu senang atau gak aku juga gak paham.yang penting terima kasih sudah dengerin cerita cerita ku.' },
+            { src: 'stiker 2 .gif', caption:'maaf banget ya, Bub, karena kamu harus menunggu cukup lama. Aku sebenarnya lagi sibuk menyiapkan sesuatu yang spesial untuk kamu sebagai kejutan. Aku berharap kamu bisa memaklumi keterlambatan ini. Aku benar-benar menghargai kesabaranmu dan mau kamu tahu kalau semua ini dilakukan karena aku ingin membuatmu bahagia. Terima kasih sudah sabar menunggu, dan aku nggak sabar untuk segera memberitahukan kejutan ini padamu. Semoga kamu bisa mengerti yaa 😁✨.' },
+            { src: 'stiker 3.gif', caption: 'Bub, aku mau ngucapin terima kasih banget karena udah mendengarkan ceritaku dan aku selalu bersyukur karena adanya kamu untuk hidup aku. Aku benar-benar menghargai waktu dan perhatian yang kamu berikan. Cerita-cerita kecil tentang proyek coding atau aktivitas baruku bisa terasa lebih berarti ketika aku bisa berbagi denganmu. Dukungan dan pengertianmu membuatku merasa lebih bersemangat dan termotivasi. Kamu selalu mendengarkan dengan penuh perhatian, dan itu berarti banyak bagiku. Terima kasih sudah jadi pendengar yang baik dan selalu mendukungku, meskipun kita sering kali sibuk dengan rutinitas masing-masing. Aku merasa sangat beruntung punya kamu di hidupku. Semoga kita terus bisa saling mendukung dan berbagi cerita satu sama lain. terima kasih kamu telah menemaniku di kehidupanku bub,aku sayang sama kamu' }
+        ];
+
+        let index = 0;
+
+        function updateImage() {
+            const image = document.getElementById('image');
+            const caption = document.getElementById('caption');
+            image.src = images[index].src;
+            caption.textContent = images[index].caption;
+        }
+
+        function prevImage() {
+            if (index > 0) {
+                index = (index - 1 + images.length) % images.length;
+                updateImage();
+            }
+        }
+
+        function nextImage() {
+            if (index < images.length - 1) {
+                index = (index + 1) % images.length;
+                updateImage();
+            } else {
+                // Kembali ke surat jika sudah di slide terakhir
+                resetApp();
+            }
+        }
+
+        function startApp() {
+            document.getElementById('intro').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('app').classList.add('active');
+            }, 500);
+        }
+
+        function resetApp() {
+            document.getElementById('app').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('intro').classList.remove('hidden');
+            }, 500);
+            index = 0;
+            updateImage();
+        }
+
+        // Inisialisasi gambar awal
+        updateImage();
+    </script>
+</body>
+</html>
